@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & FAQ - Annavo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background-color: white;
+            padding: 40px 20px;
+            margin: -40px -20px 40px -20px;
+            border-bottom: 3px solid #D4B96A;
+        }
+
+        h1 {
+            color: #1B2340;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .header-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        h2 {
+            color: #1B2340;
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            border-left: 4px solid #D4B96A;
+            padding-left: 15px;
+        }
+
+        .faq-section {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .faq-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            color: #1B2340;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            color: #D4B96A;
+        }
+
+        .faq-toggle {
+            color: #D4B96A;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            color: #555;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #D4B96A;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .contact-box h3 {
+            color: #1B2340;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .contact-box p {
+            margin-bottom: 10px;
+        }
+
+        .contact-box a {
+            color: #D4B96A;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-box a:hover {
+            text-decoration: underline;
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-tab {
+            background-color: white;
+            border: 2px solid #D4B96A;
+            color: #1B2340;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab:hover,
+        .category-tab.active {
+            background-color: #D4B96A;
+            color: white;
+        }
+
+        .faq-category {
+            display: none;
+        }
+
+        .faq-category.active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid #ddd;
+            margin-top: 50px;
+            color: #666;
+        }
+
+        .helpful-section {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .helpful-section p {
+            margin-bottom: 15px;
+        }
+
+        .helpful-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .helpful-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .helpful-btn-yes {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .helpful-btn-yes:hover {
+            background-color: #218838;
+        }
+
+        .helpful-btn-no {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .helpful-btn-no:hover {
+            background-color: #c82333;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .category-tabs {
+                flex-direction: column;
+            }
+
+            .category-tab {
+                width: 100%;
+            }
+
+            .helpful-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Support & FAQ</h1>
+        <p class="header-subtitle">Find answers to common questions about Annavo</p>
+    </header>
+
+    <div class="container">
+        <!-- Category Navigation -->
+        <div class="category-tabs">
+            <button class="category-tab active" onclick="showCategory('general')">General</button>
+            <button class="category-tab" onclick="showCategory('account')">Account</button>
+            <button class="category-tab" onclick="showCategory('posting')">Posting</button>
+            <button class="category-tab" onclick="showCategory('transactions')">Transactions</button>
+            <button class="category-tab" onclick="showCategory('safety')">Safety</button>
+            <button class="category-tab" onclick="showCategory('technical')">Technical</button>
+        </div>
+
+        <!-- General FAQs -->
+        <div id="general" class="faq-category active">
+            <h2>General Questions</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What is Annavo?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Annavo is a mobile marketplace application where users can buy and sell items across multiple categories. Whether you're looking to post announcements, browse listings, or communicate with other users, Annavo makes it easy to connect with buyers and sellers in your community.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Is Annavo free to use?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, Annavo is free to download and use. You can create an account, post announcements, and communicate with other users at no cost. If we introduce premium features in the future, we will clearly communicate any associated costs.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What countries does Annavo operate in?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Annavo is available globally. You can post announcements for items in any country. Our app supports multiple currencies and languages to accommodate users worldwide.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How can I contact Annavo support?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can contact us through the in-app support form or by emailing <a href="mailto:lilit.grigoryan009@gmail.com">lilit.grigoryan009@gmail.com</a>. We typically respond within 24-48 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account FAQs -->
+        <div id="account" class="faq-category">
+            <h2>Account & Registration</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How do I create an account?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Download the Annavo app from the App Store or Google Play<br>2. Tap "Register"<br>3. Enter your email address or username<br>4. Create a secure password<br>5. Verify your email<br>6. Complete your profile (optional)</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>I forgot my password. How can I reset it?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. On the login screen, tap "Forgot Password?"<br>2. Enter your email address<br>3. You'll receive a password reset link via email<br>4. Click the link and create a new password<br>5. Log in with your new password</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How do I update my profile?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Go to Settings in the app<br>2. Tap "Account" or "Profile"<br>3. Update your information (name, phone, location, etc.)<br>4. Add or change your profile picture<br>5. Save your changes</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How do I delete my account?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Go to Settings<br>2. Scroll to the bottom and find "Delete Account"<br>3. Confirm your decision<br>4. Enter your password to verify<br>5. Your account and associated data will be permanently deleted</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Posting FAQs -->
+        <div id="posting" class="faq-category">
+            <h2>Posting & Announcements</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How do I post an announcement?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Tap the "+" or "Create" button<br>2. Select a category<br>3. Add a title and description<br>4. Add photos (optional)<br>5. Set a price (optional)<br>6. Select your location<br>7. Tap "Post"</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What makes a good announcement?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>• Clear, descriptive title<br>• Detailed description of the item<br>• Clear, well-lit photos from multiple angles<br>• Accurate price<br>• Specific location information<br>• Honest condition description (new, like new, good, fair)<br>• Contact information or preference for communication</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can I edit my announcement after posting?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Go to "My Announcements" or "My Posts", find the announcement, and tap "Edit". You can update the title, description, price, photos, and other details at any time.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How long does my announcement stay posted?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Your announcements remain posted indefinitely unless you choose to delete or mark them as sold. We recommend regularly updating your listing or marking items as sold once you've completed the transaction.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What shouldn't I post on Annavo?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Do not post:<br>• Illegal items or services<br>• Hate speech or discriminatory content<br>• Items that infringe on intellectual property<br>• Stolen goods<br>• Services that are illegal in your area<br>• Contact information in the photos (phone numbers, addresses)<br>• Multiple identical listings (spam)<br><br>Violations may result in account suspension or termination.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction FAQs -->
+        <div id="transactions" class="faq-category">
+            <h2>Transactions & Communication</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How do I contact a seller/buyer?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Open the announcement you're interested in<br>2. Tap "Contact Seller" or "Send Message"<br>3. Start a conversation<br>4. Exchange details for meeting or payment arrangements<br><br>All communication happens within the Annavo app to protect both parties' privacy.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Does Annavo handle payments?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, Annavo does not process payments directly. Payment arrangements are made between the buyer and seller. We recommend using secure payment methods such as bank transfers, PayPal, or meeting in person with cash. Always verify the item before making payment.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What if I don't receive my item after payment?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Since Annavo doesn't handle payments, we recommend:<br>1. Only use payment methods that offer buyer protection (PayPal, credit cards)<br>2. Use video call to verify the item before sending money<br>3. Meet in person whenever possible<br>4. Get written confirmation of details<br>5. Report fraudulent users through the app<br><br>If fraud occurs, report it to your payment provider and to local authorities.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can I leave a rating or review?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! After completing a transaction, you can rate and review the other user. This helps build trust in the community and helps others make informed decisions. Ratings are based on factors like communication, honesty, and follow-through.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Safety FAQs -->
+        <div id="safety" class="faq-category">
+            <h2>Safety & Security</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How can I stay safe when using Annavo?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>When Meeting in Person:</strong><br>• Meet in a public, well-lit location<br>• Tell a friend/family member where you're going<br>• Bring someone with you if possible<br>• Trust your instincts<br>• Inspect the item before payment<br>• Avoid carrying large amounts of cash<br><br><strong>Online Safety:</strong><br>• Never share personal information (address, phone) in messages<br>• Use secure payment methods<br>• Verify user profiles and ratings<br>• Report suspicious behavior immediately</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What should I do if I encounter suspicious activity?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Do not proceed with the transaction<br>2. Do not share personal information<br>3. Take screenshots of the conversation<br>4. Tap the user's profile and select "Report" or "Block"<br>5. Email us at support with details: <a href="mailto:lilit.grigoryan009@gmail.com">lilit.grigoryan009@gmail.com</a><br>6. Report to local authorities if you believe a crime has occurred</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Is my personal information secure?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we use industry-standard encryption and security measures to protect your data. Your password is securely hashed, and we never sell your information to third parties. For details, see our Privacy Policy.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How do I block a user?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Go to the conversation or user profile<br>2. Tap the three dots (⋯) or menu icon<br>3. Select "Block User"<br>4. Confirm your action<br><br>Once blocked, the user cannot message you or see your announcements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical FAQs -->
+        <div id="technical" class="faq-category">
+            <h2>Technical Issues</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>The app won't load. What should I do?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Try these steps:<br>1. Close the app completely<br>2. Restart your device<br>3. Check your internet connection<br>4. Update the app from App Store/Google Play<br>5. Clear the app cache (Settings → Apps → Annavo → Storage → Clear Cache)<br>6. Reinstall the app if nothing else works<br><br>If the problem persists, email us at <a href="mailto:lilit.grigoryan009@gmail.com">lilit.grigoryan009@gmail.com</a></p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Why can't I upload photos?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Check:<br>1. You have granted camera/photo permissions (Settings → Apps → Annavo → Permissions)<br>2. You have sufficient storage space on your device<br>3. Your internet connection is stable<br>4. The image format is supported (JPEG, PNG)<br>5. The image file size is reasonable (under 5MB recommended)<br><br>Try restarting the app and try again.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>The app is running slow. How can I speed it up?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Clear app cache (Settings → Apps → Annavo → Storage → Clear Cache)<br>2. Close other running apps<br>3. Check your internet connection<br>4. Update the app to the latest version<br>5. Restart your device<br>6. Consider freeing up storage space on your device</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Which devices/OS versions are supported?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>iOS:</strong> iOS 13.0 or later<br><strong>Android:</strong> Android 8.0 or later<br><br>For the best experience, we recommend updating to the latest available version of your device's operating system.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helpful Section -->
+        <div class="helpful-section">
+            <p><strong>Was this helpful?</strong></p>
+            <div class="helpful-buttons">
+                <button class="helpful-btn helpful-btn-yes" onclick="reportHelpful('yes')">👍 Yes, Helpful</button>
+                <button class="helpful-btn helpful-btn-no" onclick="reportHelpful('no')">👎 Not Helpful</button>
+            </div>
+        </div>
+
+        <!-- Contact Box -->
+        <div class="contact-box">
+            <h3>Still need help?</h3>
+            <p>Can't find the answer you're looking for? Contact our support team:</p>
+            <p>📧 <strong>Email:</strong> <a href="mailto:lilit.grigoryan009@gmail.com">lilit.grigoryan009@gmail.com</a></p>
+            <p>⏱️ <strong>Response Time:</strong> Usually within 24-48 hours</p>
+            <p>📱 <strong>In-App Support:</strong> Use the support form in Settings</p>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Annavo. All rights reserved.</p>
+            <p><a href="privacy-policy.html" style="color: #D4B96A; text-decoration: none;">Privacy Policy</a> |
+               <a href="terms-of-service.html" style="color: #D4B96A; text-decoration: none;">Terms of Service</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleFaq(element) {
+            const faqItem = element.closest('.faq-item');
+            faqItem.classList.toggle('active');
+        }
+
+        function showCategory(categoryId) {
+            // Hide all categories
+            document.querySelectorAll('.faq-category').forEach(cat => {
+                cat.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected category
+            document.getElementById(categoryId).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+
+            // Scroll to top of FAQs
+            document.querySelector('h2').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function reportHelpful(helpful) {
+            if (helpful === 'yes') {
+                alert('Thank you! We\'re glad we could help.');
+            } else {
+                alert('We\'re sorry. Please contact us with your question at lilit.grigoryan009@gmail.com');
+            }
+        }
+    </script>
+</body>
+</html>
